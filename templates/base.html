@@ -9,6 +9,13 @@
         {% load staticfiles %}
         <link href="{% static "base.css" %}" rel="stylesheet" type="text/css" media="screen" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+        <!-- this is for the dropdown button so the colors can change.....its not working-->
+        <script>
+            function change(color){
+               document.body.stylesheet.backgroundColor = "color"
+            }
+        </script>
     </head>
 
     <body>
@@ -32,14 +39,24 @@
             <nav id="left" class="column">
                 {% include "left_nav.html" %}
                 <article>
-                        <h1>Team Citron:</h1>
-                        <p>In the center of this page are two links, one takes you to the map of the city of Austin with a heat map for user sentiment data, and the other takes you to the data page.</p>
+                        <h1>Team Cerise:</h1>
+                        <p>In the center of this page are two links, one takes you to the map of the city of Austin with a heat map for user sentiment data, and the other takes you to the data page.
+                        And on the bottom to the left is a personaliztiona button with links that will help you personalize the background color of the website</p>
+                        <div class="dropdown">
+                            <button class="dropbtn">Personalize</button>
+                            <div class="dropdown-content">
+                                <a onclick="change(teal)">Teal</a>
+                                <a onclick="change(red)">Red</a>
+                                <a onclick="change(blue)">Blue</a>
+                                <a onclick="change(green)">Green</a>
+                                </div>
+                            </div>
                 </article>
             </nav>
             <nav id="right" class="column">
                 <article>
                     <h1>About:</h1>
-                    <p>Project for Dr. Lehr's Fall 2015 Software Engineering. Goal is to create a web application that shows user sentiment for City of Austin.</p>
+                    <p>Project for Dr. Lehr's Fall 2016 Software Engineering. Goal is to improve a web application that shows user sentiment for City of Austin.</p>
                 </article>
             </nav>
         </div>
