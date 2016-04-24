@@ -9,13 +9,7 @@
         {% load staticfiles %}
         <link href="{% static "base.css" %}" rel="stylesheet" type="text/css" media="screen" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
-        <!-- this is for the dropdown button so the colors can change.....its not working-->
-        <script>
-            function change(color){
-               document.body.stylesheet.backgroundColor = "color"
-            }
-        </script>
+        {% include "real_base.html" %}
     </head>
 
     <body>
