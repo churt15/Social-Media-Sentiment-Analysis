@@ -9,13 +9,7 @@
         {% load staticfiles %}
         <link href="{% static "base.css" %}" rel="stylesheet" type="text/css" media="screen" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
-        <!-- this is for the dropdown button so the colors can change.....its not working-->
-        <script>
-            function change(color){
-               document.body.stylesheet.backgroundColor = "color"
-            }
-        </script>
+        {% include "real_base.html" %}
     </head>
 
     <body>
@@ -43,16 +37,7 @@
                         <p>The links in the center direct you to either a map of the city of Austin or the data overview
                             section. The map feature includes an overlay which models user sentiment data with a heat
                             map, and the data overview section offers a chart and totals of the processed data. The
-                            'Personalize' button below allows the user to customize the color of the page background
-                        <div class="dropdown">
-                            <button class="dropbtn">Personalize</button>
-                            <div class="dropdown-content">
-                                <a onclick="change(teal)">Teal</a>
-                                <a onclick="change(red)">Red</a>
-                                <a onclick="change(blue)">Blue</a>
-                                <a onclick="change(green)">Green</a>
-                                </div>
-                            </div>
+                            'Personalize' button above allows the user to customize the color of the page background</p>
                 </article>
             </nav>
             <nav id="right" class="column">
