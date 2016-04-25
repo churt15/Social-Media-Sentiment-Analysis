@@ -6,7 +6,7 @@ var MAX_POINTS = 424;
 	
 var cityHightlight;
 
-var InfoMarkers = [], posts = [];
+var InfoMarkers = [], posts = [], AllMarkers = [];
 
 // Initialize the map
 function initMap() {
@@ -47,14 +47,22 @@ function initMap() {
         }
 		setTimeout(function() {
 			var i = 0;
-            for(; i < heatmapPos.data.length && i < posts.length; i++) {
-                addMarker(heatmapPos.data.getAt(i), posts[i]);
-            }
-            var posPosts = i;
-			for(i = 0; i < heatmapNeg.data.length && i < posts.length - posPosts; i++) {
+            for(; i < heatmapNeg.data.length && i < posts.length; i++) {
                 addMarker(heatmapNeg.data.getAt(i), posts[i]);
             }
+
+            var totalPosts = i;
+			for(i = 0; i < heatmapPos.data.length && totalPosts < posts.length; i++, totalPosts) {
+                addMarker(heatmapPos.data.getAt(i), posts[totalPosts]);
+            }
+
+            // Makes an array of neutral points. Cerise group. (Carlos)
+			for(i = 0; i < heatmapNeutral.data.length && totalPosts < posts.length; i++, totalPosts) {
+                addMarker(heatmapNeutral.data.getAt(i), posts[totalPosts]);
+            }
 			
+            AllMarkers = InfoMarkers.slice();  // Keeps a permanent copy of all markers
+
             if (!google.maps.Polygon.prototype.getBounds) {
  
             google.maps.Polygon.prototype.getBounds=function(){
@@ -65,7 +73,7 @@ function initMap() {
              
             }
             
-            map.fitBounds(cityHightlight.getBounds());
+            //map.fitBounds(cityHightlight.getBounds());
         }, DELAY);
 	});
 
@@ -152,22 +160,68 @@ function initMap() {
 			cityHightlight.setMap(null);
 		}
 	}
+
+	// Shows all positive comments. Addded by Cerise group. (Carlos)
+	document.getElementById('showPositive').onclick = function showPositive() {
+	 setMapOnAll(null, InfoMarkers);
+	 InfoMarkers = [];
+	 var posCount = 0;
+	 for (var i = 0; i < posts.length && posCount < heatmapPos.data.length; i++){
+	 	if (posts[i].sentiment == 'POS'){
+	 		addMarker(heatmapPos.data.getAt(posCount), posts[i]);
+	 		posCount++;
+	 	}
+	 }
+	}
+
+
+	// Shows all negative comments. Addded by Cerise group. (Carlos)
+	document.getElementById('showNeutral').onclick = function showNeutral() {
+	 setMapOnAll(null, InfoMarkers);
+	 InfoMarkers = [];
+	 var neutralCount = 0;
+	 for (var i = 0; i < posts.length && neutralCount < heatmapNeutral.data.length; i++){
+	 	if (posts[i].sentiment == 'NEU'){
+	 		addMarker(heatmapNeutral.data.getAt(neutralCount), posts[i]);
+	 		neutralCount++;
+	 	}
+	 }
+	}
+
+	// Shows all negative comments. Addded by Cerise group. (Carlos)
+	document.getElementById('showNegative').onclick = function showNegative() {
+	 setMapOnAll(null, InfoMarkers);
+	 InfoMarkers = [];
+	 var negCount = 0;
+	 for (var i = 0; i < posts.length && negCount < heatmapNeg.data.length; i++){
+	 	if (posts[i].sentiment == 'NEG'){
+	 		addMarker(heatmapNeg.data.getAt(negCount), posts[i]);
+	 		negCount++;
+	 	}
+	 }
+	}
 	
 	// Removes the markers from the map, but keeps them in the array.
+	// Modified by Cerise group. (Carlos)
 	document.getElementById('hideMarkers').onclick = function hideMarkers() {
+	 setMapOnAll(null, AllMarkers);
 	 setMapOnAll(null, InfoMarkers);
 	}
 
 	// Shows any markers currently in the array.
+	// Modified by Cerise group. (Carlos)
 	document.getElementById('showMarkers').onclick = function showMarkers() {
+	 setMapOnAll(null, InfoMarkers);
+	 InfoMarkers = AllMarkers.slice();
 	 setMapOnAll(map, InfoMarkers);
 	}
 
 	// Deletes all markers in the array by removing references to them.
-	document.getElementById('deleteMarkers').onclick = function deleteMarkers() {
-	 setMapOnAll(null, InfoMarkers);
-	 InfoMarkers = [];
-	}
+	// There is no practical need for this feature, removing. Cerise group. (Carlos)
+	//document.getElementById('deleteMarkers').onclick = function deleteMarkers() {
+	 //setMapOnAll(null, InfoMarkers);
+	 //InfoMarkers = [];
+	//}
 	
 	document.getElementById('searchTag').onclick = function searchTag() {
 	 var tag = document.getElementById('textarea').value.toString();
@@ -239,6 +293,7 @@ function getPoints(MAX_POINTS) {
 		setTimeout(function() {
 			var genPointsPos = [];
 			var genPointsNeg = [];
+			var genPointsNeutral = [];
 			var bounds = new google.maps.LatLngBounds();
 			
 			// Calculate the bounds of the polygon
@@ -251,32 +306,7 @@ function getPoints(MAX_POINTS) {
 
 			var numPoints = 0;
 			//Main source of lag in map
-			while(numPoints < MAX_POINTS/2) {
-			   var ptLat = Math.random() * (ne.lat() - sw.lat()) + sw.lat();
-			   var ptLng = Math.random() * (ne.lng() - sw.lng()) + sw.lng();
-			   var point = new google.maps.LatLng(ptLat,ptLng);
-			   // Add point if it's inside the bounds of polygon
-			   if (google.maps.geometry.poly.containsLocation(point,cityHightlight)) {
-					genPointsPos.push(new google.maps.LatLng(ptLat,ptLng));
-					numPoints++;
-			   }
-			}
-			
-			// Generate Heatmap from getPoints()
-			heatmapPos = new google.maps.visualization.HeatmapLayer({
-				data: genPointsPos,
-				radius:7,
-				gradient:[
-				'rgba(255, 0, 0, 0.1)',
-				'rgba(255, 0, 0, 0.7)',
-				'rgba(255, 0, 0, 0.9)',
-				'rgba(255, 0, 0, 1)',
-				'rgba(255, 0, 0, 1)'
-				],
-				map: map
-			});
-			
-			while(numPoints < MAX_POINTS) {
+			while(numPoints < MAX_POINTS/3) {
 			   var ptLat = Math.random() * (ne.lat() - sw.lat()) + sw.lat();
 			   var ptLng = Math.random() * (ne.lng() - sw.lng()) + sw.lng();
 			   var point = new google.maps.LatLng(ptLat,ptLng);
@@ -290,6 +320,57 @@ function getPoints(MAX_POINTS) {
 			// Generate Heatmap from getPoints()
 			heatmapNeg = new google.maps.visualization.HeatmapLayer({
 				data: genPointsNeg,
+				radius:7,
+				gradient:[
+				'rgba(255, 0, 0, 0.1)',
+				'rgba(255, 0, 0, 0.7)',
+				'rgba(255, 0, 0, 0.9)',
+				'rgba(255, 0, 0, 1)',
+				'rgba(255, 0, 0, 1)'
+				],
+				map: map
+			});
+
+			// Get points for neutral points. Cerise group. (Carlos)
+			while(numPoints < (MAX_POINTS/3)*2) {
+			   var ptLat = Math.random() * (ne.lat() - sw.lat()) + sw.lat();
+			   var ptLng = Math.random() * (ne.lng() - sw.lng()) + sw.lng();
+			   var point = new google.maps.LatLng(ptLat,ptLng);
+			   // Add point if it's inside the bounds of polygon
+			   if (google.maps.geometry.poly.containsLocation(point,cityHightlight)) {
+					genPointsNeutral.push(new google.maps.LatLng(ptLat,ptLng));
+					numPoints++;
+			   }
+			}
+			
+			// Generate Heatmap from neutral genPoints(). Cerise group. (Carlos)
+			heatmapNeutral = new google.maps.visualization.HeatmapLayer({
+				data: genPointsNeutral,
+				radius:7,
+				gradient:[
+				'rgba(0, 40, 0, 0.1)',
+				'rgba(0, 40, 0, 0.7)',
+				'rgba(0, 40, 0, 0.9)',
+				'rgba(0, 40, 0, 1)',
+				'rgba(0, 40, 0, 1)'
+				],
+				map: map
+			});
+			
+			while(numPoints < MAX_POINTS) {
+			   var ptLat = Math.random() * (ne.lat() - sw.lat()) + sw.lat();
+			   var ptLng = Math.random() * (ne.lng() - sw.lng()) + sw.lng();
+			   var point = new google.maps.LatLng(ptLat,ptLng);
+			   // Add point if it's inside the bounds of polygon
+			   if (google.maps.geometry.poly.containsLocation(point,cityHightlight)) {
+					genPointsPos.push(new google.maps.LatLng(ptLat,ptLng));
+					numPoints++;
+			   }
+			}
+			
+			// Generate Heatmap from getPoints()
+			heatmapPos = new google.maps.visualization.HeatmapLayer({
+				data: genPointsPos,
 				radius:7,
 				gradient:[
 				'rgba(0, 255, 0, 0.1)',

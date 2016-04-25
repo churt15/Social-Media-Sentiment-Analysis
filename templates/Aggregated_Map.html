@@ -15,6 +15,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="{% static 'Aggregated_Map.js' %}" type="text/javascript"></script>
 		<title>Location of Comments</title>
+        {% include "real_base.html" %}
 	</head>
 	<body>
         <header id="header">
@@ -24,9 +25,11 @@
             <main id="center" class="column">
                 <form id="map-buttons">
 					<input id="highlight" class="push_button blue" onclick="highlight();" type=button value="Highlight Austin">
+                    <input id="showPositive" class="push_button blue" onclick="showPositive();" type=button value="Show Positive">
+                    <input id="showNeutral" class="push_button blue" onclick="showNeutral();" type=button value="Show Neutral">
+                    <input id="showNegative" class="push_button blue" onclick="showNegative();" type=button value="Show Negative">
+                    <input id="showMarkers" class="push_button blue" onclick="showMarkers();" type=button value="Show All">
                     <input id="hideMarkers" class="push_button blue" onclick="hideMarkers();" type=button value="Hide Markers">
-                    <input id="showMarkers" class="push_button blue" onclick="showMarkers();" type=button value="Show All Markers">
-                    <input id="deleteMarkers" class="push_button red" onclick="deleteMarkers();" type=button value="Delete Markers">
                 </form>
 				<div id="map-wrapper">
 					<h1><i class="fa fa-spinner fa-pulse fa-3x"></i></h1>
@@ -34,10 +37,12 @@
 				</div>
                 <div id="tags">
                     <form id="search">
-                        <input id="searchTag" class="push_button blue" onclick="searchTag();" type=button value="Search for Tag">
                         <input id="textarea" type="text" placeholder="Enter a tag" name="tag">
+                        <input id="searchTag" class="push_button blue" onclick="searchTag();" type=button value="Search for Tag">
+                        
+                        <div id="numPosts" class="push_button blue"></div>
                     </form>
-                    <div id="numPosts" class="push_button blue"></div>
+                    
                 </div>
             </main>
             <nav id="left" class="column">

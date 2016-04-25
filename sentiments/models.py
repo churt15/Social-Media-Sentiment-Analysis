@@ -14,9 +14,11 @@ from django.db import models
 class Post(models.Model):
     POSITIVE = 'POS'
     NEGATIVE = 'NEG'
+    NEUTRAL = 'NEU'
     SENTM_CHOICES = (
             (POSITIVE, 'Positive'),
             (NEGATIVE, 'Negative'),
+            (NEUTRAL, 'Neutral'),
     )
 
     timestamp = models.CharField(max_length=50)
