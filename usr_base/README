@@ -1,0 +1,4 @@
+This is a rough sketch of the user object, forms, and template.
+
+These features are not fully realized at this time, and are using basic features of the Django provided User object
+(and authentication).
