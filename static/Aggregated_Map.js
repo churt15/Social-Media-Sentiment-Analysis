@@ -159,7 +159,7 @@ function initMap() {
 			cityHightlight.strokeOpacity = 0;
 			cityHightlight.setMap(null);
 		}
-	}
+	};
 
 	// Shows all positive comments. Addded by Cerise group. (Carlos)
 	document.getElementById('showPositive').onclick = function showPositive() {
@@ -172,7 +172,7 @@ function initMap() {
 	 		posCount++;
 	 	}
 	 }
-	}
+	};
 
 
 	// Shows all negative comments. Addded by Cerise group. (Carlos)
@@ -186,7 +186,7 @@ function initMap() {
 	 		neutralCount++;
 	 	}
 	 }
-	}
+	};
 
 	// Shows all negative comments. Addded by Cerise group. (Carlos)
 	document.getElementById('showNegative').onclick = function showNegative() {
@@ -199,14 +199,14 @@ function initMap() {
 	 		negCount++;
 	 	}
 	 }
-	}
+	};
 	
 	// Removes the markers from the map, but keeps them in the array.
 	// Modified by Cerise group. (Carlos)
 	document.getElementById('hideMarkers').onclick = function hideMarkers() {
 	 setMapOnAll(null, AllMarkers);
 	 setMapOnAll(null, InfoMarkers);
-	}
+	};
 
 	// Shows any markers currently in the array.
 	// Modified by Cerise group. (Carlos)
@@ -214,7 +214,7 @@ function initMap() {
 	 setMapOnAll(null, InfoMarkers);
 	 InfoMarkers = AllMarkers.slice();
 	 setMapOnAll(map, InfoMarkers);
-	}
+	};
 
 	// Deletes all markers in the array by removing references to them.
 	// There is no practical need for this feature, removing. Cerise group. (Carlos)

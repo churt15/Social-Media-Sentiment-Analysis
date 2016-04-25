@@ -1,6 +1,6 @@
 <div>
         <script language="JavaScript">
-
+            //creates Cookie (Ivan:Cerise)
             function createCookie(name, value, days) {
                 if (days) {
                     var date = new Date();
@@ -11,6 +11,7 @@
                 document.cookie = name+"="+value+expires+"; path=/";
             }
 
+            //readsCookie (Ivan:Cerise)
             function readCookie(name) {
                 var nameEQ = name + "=";
                 var ca = document.cookie.split(';');
@@ -22,10 +23,48 @@
             return null;
             }
 
+            //delete cookie (Ivan:Cerise)
             function eraseCookie(name) {
             createCookie(name,"",-1);
             }
 
+            //onload it reads the cookies saved onto browser for header, footer, left and right colors (Ivan:Cerise)
+            window.onload = function(){
+                elem_1= 'right';
+                elem_2= 'left';
+                elem_3= 'header';
+                elem_4 = 'footer';
+
+                //right
+                if (elem_1=document.getElementById(elem_1)){
+                if(readCookie('setRColor')){
+                    elem_1.style.backgroundColor = readCookie('setRColor');
+                }
+               }
+
+                //left
+                if (elem_2=document.getElementById(elem_2)){
+                if(readCookie('setLColor')){
+                    elem_2.style.backgroundColor = readCookie('setLColor');
+                }
+               }
+
+                //header
+                if (elem_3=document.getElementById(elem_3)){
+                if(readCookie('setBgColor')){
+                    elem_3.style.backgroundColor = readCookie('setBgColor');
+                }
+               }
+
+                //footer
+                if (elem_4=document.getElementById(elem_4)){
+                if(readCookie('setBtColor')){
+                    elem_4.style.backgroundColor = readCookie('setBtColor');
+                }
+               }
+            };
+
+            //changes the color for the right and creates a cookie
             function setRColor(color){
                 elem = 'right';
                 if (elem=document.getElementById(elem)){
@@ -33,11 +72,11 @@
                         elem.style.backgroundColor = color;
                         createCookie('setRColor', color, 365);
                     }
-                    //inpt if statement here to read cookie
                 }
                 return 1;
             }
 
+            //changes the color for the left and creates a cookie (Ivan:Cerise; Update)
             function setLColor(color){
                 elem = 'left';
                 if (elem=document.getElementById(elem)) {
@@ -45,11 +84,11 @@
                         elem.style.backgroundColor = color;
                         createCookie('setLColor', color, 365);
                     }
-                    //input if statement here to read cookie
                 }
                 return 1;
             }
 
+            //changes the color for the header and creates a cookie
             function setBgColor(color){
                 elem = 'header';
                 if (elem=document.getElementById(elem)){
@@ -57,11 +96,11 @@
                         elem.style.backgroundColor = color;
                         createCookie('setBgColor', color, 365);
                     }
-                    //input if statement here to read cookie
                 }
                 return 1;
             }
 
+            //changes the color for the footer and creates a cookie
             function setBtColor(color){
                 elem = 'footer';
                 if (elem=document.getElementById(elem)){
@@ -69,8 +108,6 @@
                         elem.style.backgroundColor = color;
                         createCookie('setBtColor', color, 365);
                     }
-                    //input if statement here to read cookie
-
                 }
                 return 1;
             }
