@@ -53,16 +53,20 @@ body {
 }
 
 #search input[type="text"]{
-    margin: 0 auto;
-	width: 220px;
-    height:30px;
+
+	float:right;
+    margin-right: 11%;
+	width: 225px;
+    height:39px;
 }
 
 #searchTag {
+	float:right;
 	width: 110px;
     margin: 0 auto;
 }
 
 #numPosts {
-    width: 338px;
+
+    width: 200px;
 }
