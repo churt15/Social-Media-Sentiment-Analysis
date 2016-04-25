@@ -126,8 +126,8 @@ function initMap() {
 			
 		InfoMarkers.push(InfoMarker);
 		
-		// Open selected marker's InfoWindow
-		google.maps.event.addListener(marker,'click', (
+		// Open selected marker's InfoWindow just sliding over it (Ivan:Cerise 2016 Update)
+		google.maps.event.addListener(marker,'mouseover', (
 			function(marker,contentString,infowindow){ 
 				return function() {
 				   infowindow.setContent(contentString);
@@ -135,7 +135,16 @@ function initMap() {
 				};
 			})(marker,contentString,infowindow)
 		); 
-		
+
+        // close selected marker's InfoWindow just sliding over it (Ivan:Cerise 2016 Update)
+		google.maps.event.addListener(marker,'mouseout', (
+			function(marker,contentString,infowindow){
+				return function() {
+				   infowindow.close();
+				};
+			})(marker,contentString,infowindow)
+		);
+
 	}
 	
 	// Called when map is clicked
