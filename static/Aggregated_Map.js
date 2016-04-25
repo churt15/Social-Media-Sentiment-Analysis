@@ -73,7 +73,7 @@ function initMap() {
              
             }
             
-            map.fitBounds(cityHightlight.getBounds());
+            //map.fitBounds(cityHightlight.getBounds());
         }, DELAY);
 	});
 
