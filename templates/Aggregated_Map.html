@@ -25,9 +25,11 @@
             <main id="center" class="column">
                 <form id="map-buttons">
 					<input id="highlight" class="push_button blue" onclick="highlight();" type=button value="Highlight Austin">
+                    <input id="showPositive" class="push_button blue" onclick="showPositive();" type=button value="Show Positive">
+                    <input id="showNeutral" class="push_button blue" onclick="showNeutral();" type=button value="Show Neutral">
+                    <input id="showNegative" class="push_button blue" onclick="showNegative();" type=button value="Show Negative">
+                    <input id="showMarkers" class="push_button blue" onclick="showMarkers();" type=button value="Show All">
                     <input id="hideMarkers" class="push_button blue" onclick="hideMarkers();" type=button value="Hide Markers">
-                    <input id="showMarkers" class="push_button blue" onclick="showMarkers();" type=button value="Show All Markers">
-                    <input id="deleteMarkers" class="push_button red" onclick="deleteMarkers();" type=button value="Delete Markers">
                 </form>
 				<div id="map-wrapper">
 					<h1><i class="fa fa-spinner fa-pulse fa-3x"></i></h1>

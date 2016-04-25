@@ -6,7 +6,7 @@ var MAX_POINTS = 424;
 	
 var cityHightlight;
 
-var InfoMarkers = [], posts = [];
+var InfoMarkers = [], posts = [], AllMarkers = [];
 
 // Initialize the map
 function initMap() {
@@ -55,6 +55,8 @@ function initMap() {
                 addMarker(heatmapNeg.data.getAt(i), posts[i]);
             }
 			
+            AllMarkers = InfoMarkers.slice();  // Keeps a permanent copy of all markers
+
             if (!google.maps.Polygon.prototype.getBounds) {
  
             google.maps.Polygon.prototype.getBounds=function(){
@@ -152,22 +154,54 @@ function initMap() {
 			cityHightlight.setMap(null);
 		}
 	}
+
+	// Shows all positive comments. Addded by Cerise group. (Carlos)
+	document.getElementById('showPositive').onclick = function showPositive() {
+	 setMapOnAll(null, InfoMarkers);
+	 InfoMarkers = [];
+	 var posCount = 0;
+	 for (var i = 0; i < posts.length && posCount < heatmapPos.data.length; i++){
+	 	if (posts[i].sentiment == 'POS'){
+	 		addMarker(heatmapPos.data.getAt(posCount), posts[i]);
+	 		posCount++;
+	 	}
+	 }
+	}
+
+	// Shows all negative comments. Addded by Cerise group. (Carlos)
+	document.getElementById('showNegative').onclick = function showNegative() {
+	 setMapOnAll(null, InfoMarkers);
+	 InfoMarkers = [];
+	 var negCount = 0;
+	 for (var i = 0; i < posts.length && negCount < heatmapNeg.data.length; i++){
+	 	if (posts[i].sentiment == 'NEG'){
+	 		addMarker(heatmapNeg.data.getAt(negCount), posts[i]);
+	 		negCount++;
+	 	}
+	 }
+	}
 	
 	// Removes the markers from the map, but keeps them in the array.
+	// Modified by Cerise group. (Carlos)
 	document.getElementById('hideMarkers').onclick = function hideMarkers() {
+	 setMapOnAll(null, AllMarkers);
 	 setMapOnAll(null, InfoMarkers);
 	}
 
 	// Shows any markers currently in the array.
+	// Modified by Cerise group. (Carlos)
 	document.getElementById('showMarkers').onclick = function showMarkers() {
+	 setMapOnAll(null, InfoMarkers);
+	 InfoMarkers = AllMarkers.slice();
 	 setMapOnAll(map, InfoMarkers);
 	}
 
 	// Deletes all markers in the array by removing references to them.
-	document.getElementById('deleteMarkers').onclick = function deleteMarkers() {
-	 setMapOnAll(null, InfoMarkers);
-	 InfoMarkers = [];
-	}
+	// There is no practical need for this feature, removing. Cerise group. (Carlos)
+	//document.getElementById('deleteMarkers').onclick = function deleteMarkers() {
+	 //setMapOnAll(null, InfoMarkers);
+	 //InfoMarkers = [];
+	//}
 	
 	document.getElementById('searchTag').onclick = function searchTag() {
 	 var tag = document.getElementById('textarea').value.toString();
@@ -257,14 +291,14 @@ function getPoints(MAX_POINTS) {
 			   var point = new google.maps.LatLng(ptLat,ptLng);
 			   // Add point if it's inside the bounds of polygon
 			   if (google.maps.geometry.poly.containsLocation(point,cityHightlight)) {
-					genPointsPos.push(new google.maps.LatLng(ptLat,ptLng));
+					genPointsNeg.push(new google.maps.LatLng(ptLat,ptLng));
 					numPoints++;
 			   }
 			}
 			
 			// Generate Heatmap from getPoints()
-			heatmapPos = new google.maps.visualization.HeatmapLayer({
-				data: genPointsPos,
+			heatmapNeg = new google.maps.visualization.HeatmapLayer({
+				data: genPointsNeg,
 				radius:7,
 				gradient:[
 				'rgba(255, 0, 0, 0.1)',
@@ -282,14 +316,14 @@ function getPoints(MAX_POINTS) {
 			   var point = new google.maps.LatLng(ptLat,ptLng);
 			   // Add point if it's inside the bounds of polygon
 			   if (google.maps.geometry.poly.containsLocation(point,cityHightlight)) {
-					genPointsNeg.push(new google.maps.LatLng(ptLat,ptLng));
+					genPointsPos.push(new google.maps.LatLng(ptLat,ptLng));
 					numPoints++;
 			   }
 			}
 			
 			// Generate Heatmap from getPoints()
-			heatmapNeg = new google.maps.visualization.HeatmapLayer({
-				data: genPointsNeg,
+			heatmapPos = new google.maps.visualization.HeatmapLayer({
+				data: genPointsPos,
 				radius:7,
 				gradient:[
 				'rgba(0, 255, 0, 0.1)',
