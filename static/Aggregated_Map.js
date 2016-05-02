@@ -181,10 +181,11 @@ function initMap() {
 	 		posCount++;
 	 	}
 	 }
+	 document.getElementById('numPosts').innerHTML = "Number of posts: " + InfoMarkers.length;
 	};
 
 
-	// Shows all negative comments. Addded by Cerise group. (Carlos)
+	// Shows all neutral comments. Addded by Cerise group. (Carlos)
 	document.getElementById('showNeutral').onclick = function showNeutral() {
 	 setMapOnAll(null, InfoMarkers);
 	 InfoMarkers = [];
@@ -195,6 +196,7 @@ function initMap() {
 	 		neutralCount++;
 	 	}
 	 }
+	 document.getElementById('numPosts').innerHTML = "Number of posts: " + InfoMarkers.length;
 	};
 
 	// Shows all negative comments. Addded by Cerise group. (Carlos)
@@ -208,6 +210,7 @@ function initMap() {
 	 		negCount++;
 	 	}
 	 }
+	 document.getElementById('numPosts').innerHTML = "Number of posts: " + InfoMarkers.length;
 	};
 	
 	// Removes the markers from the map, but keeps them in the array.
@@ -215,6 +218,8 @@ function initMap() {
 	document.getElementById('hideMarkers').onclick = function hideMarkers() {
 	 setMapOnAll(null, AllMarkers);
 	 setMapOnAll(null, InfoMarkers);
+	 InfoMarkers = [];
+	 document.getElementById('numPosts').innerHTML = "Number of posts: " + InfoMarkers.length;
 	};
 
 	// Shows any markers currently in the array.
@@ -223,6 +228,7 @@ function initMap() {
 	 setMapOnAll(null, InfoMarkers);
 	 InfoMarkers = AllMarkers.slice();
 	 setMapOnAll(map, InfoMarkers);
+	 document.getElementById('numPosts').innerHTML = "Number of posts: " + InfoMarkers.length;
 	};
 
 	// Deletes all markers in the array by removing references to them.
