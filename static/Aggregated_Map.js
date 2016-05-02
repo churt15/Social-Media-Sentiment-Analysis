@@ -52,12 +52,12 @@ function initMap() {
             }
 
             var totalPosts = i;
-			for(i = 0; i < heatmapPos.data.length && totalPosts < posts.length; i++, totalPosts) {
+			for(i = 0; i < heatmapPos.data.length && totalPosts < posts.length; i++, totalPosts++) {
                 addMarker(heatmapPos.data.getAt(i), posts[totalPosts]);
             }
 
             // Makes an array of neutral points. Cerise group. (Carlos)
-			for(i = 0; i < heatmapNeutral.data.length && totalPosts < posts.length; i++, totalPosts) {
+			for(i = 0; i < heatmapNeutral.data.length && totalPosts < posts.length; i++, totalPosts++) {
                 addMarker(heatmapNeutral.data.getAt(i), posts[totalPosts]);
             }
 			
@@ -93,8 +93,8 @@ function initMap() {
 			icon:'/static/grey-marker.png'
 		});
 		
-		//Only display the first 20 markers
-		if(InfoMarkers.length < 20){
+		// Display 424 markers
+		if(InfoMarkers.length < 424){
 			marker.setMap(map);
 		}
 		else {
