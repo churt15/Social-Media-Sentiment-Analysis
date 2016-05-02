@@ -245,6 +245,9 @@ function initMap() {
 	 for (var i = 0; i < InfoMarkers.length; i++) {
 		 setMapOnAll(null, InfoMarkers);
 	 }
+
+	 InfoMarkers = AllMarkers;
+
 	 for (var i = 0; i < InfoMarkers.length; i++) {
 		 // Get tag from InfoWindow
         if(InfoMarkers[i].InfoWindow.content.includes("<strong><div>Keywords: ")) {
