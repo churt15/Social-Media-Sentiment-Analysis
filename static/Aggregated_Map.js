@@ -363,10 +363,10 @@ function getPoints(MAX_POINTS) {
 				data: genPointsNeutral,
 				radius:7,
 				gradient:[
-				'rgba(0, 40, 0, 0.1)',
+				'rgba(30, 40, 100, 0.1)',
 				'rgba(0, 40, 0, 0.7)',
-				'rgba(0, 40, 0, 0.9)',
-				'rgba(0, 40, 0, 1)',
+				'rgba(40, 40, 200, 0.9)',
+				'rgba(40, 0, 0, 1)',
 				'rgba(0, 40, 0, 1)'
 				],
 				map: map
