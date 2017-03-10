@@ -1,6 +1,4 @@
-# CS3398_Citron
-
-The user interface features for a web tool that allows City Planners to explore the sentiment of social media posts
+A web tool that allows city of Austin planners to explore the sentiment of social media posts
 about City of Austin projects.
 
 Project built using Django 1.8.* stack, Python 2.7.*, and you'll need to use pip to install indicoio before project
